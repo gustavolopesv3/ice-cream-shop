@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { MdAddShoppingCart } from 'react-icons/md';
-import Loader from 'react-loader-spinner';
-import * as CartActions from '../../store/modules/cart/actions';
-import * as ProductActions from '../../store/modules/products/actions';
-import api from '../../services/api';
-import { formatPrice } from '../../utils/format';
-import GridPlaceholder from '../../components/GridPlaceholder/GridPlaceholder';
-import { ProductList } from './Home_Styles';
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { MdAddShoppingCart } from "react-icons/md";
+import Loader from "react-loader-spinner";
+import * as CartActions from "../../store/modules/cart/actions";
+import * as ProductActions from "../../store/modules/products/actions";
+import api from "../../services/api";
+import { formatPrice } from "../../utils/format";
+import GridPlaceholder from "../../components/GridPlaceholder/GridPlaceholder";
+import { ProductList } from "./Home_Styles";
 
 export default function Home() {
   const products = useSelector(state => state.products);
@@ -24,12 +24,12 @@ export default function Home() {
 
   useEffect(() => {
     async function loadProducts() {
-      const response = await api.get('products');
+      const response = await api.get("products");
 
       const data = response.data.map(product => ({
         ...product,
         priceFormatted: formatPrice(product.price),
-        loading: false,
+        loading: false
       }));
 
       dispatch(ProductActions.storeProducts(data));
@@ -57,7 +57,10 @@ export default function Home() {
             <div>
               <span>{product.priceFormatted}</span>
 
-              <button type="button" onClick={() => handleAddProduct(product.id)}>
+              <button
+                type="button"
+                onClick={() => handleAddProduct(product.id)}
+              >
                 {product.loading ? (
                   <Loader type="Oval" color="#FFF" height={16} width={24} />
                 ) : (
@@ -67,7 +70,7 @@ export default function Home() {
                   </div>
                 )}
 
-                <span>ADD TO CART</span>
+                <span>Adicionar ao Carrinho</span>
               </button>
             </div>
           </li>

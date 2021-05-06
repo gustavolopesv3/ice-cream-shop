@@ -1,9 +1,20 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { MdRemoveCircleOutline, MdAddCircleOutline, MdDelete, MdRemoveShoppingCart } from 'react-icons/md';
-import * as CartActions from '../../store/modules/cart/actions';
-import { formatPrice } from '../../utils/format';
-import { Container, ProductTable, Total, EmptyCart, StartShopping } from './Cart_Styles';
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  MdRemoveCircleOutline,
+  MdAddCircleOutline,
+  MdDelete,
+  MdRemoveShoppingCart
+} from "react-icons/md";
+import * as CartActions from "../../store/modules/cart/actions";
+import { formatPrice } from "../../utils/format";
+import {
+  Container,
+  ProductTable,
+  Total,
+  EmptyCart,
+  StartShopping
+} from "./Cart_Styles";
 
 export default function Cart() {
   const total = useSelector(state =>
@@ -17,9 +28,20 @@ export default function Cart() {
   const cart = useSelector(state =>
     state.cart.map(product => ({
       ...product,
-      subtotal: formatPrice(product.price * product.amount),
+      subtotal: formatPrice(product.price * product.amount)
     }))
   );
+  function cartWhats() {
+    let teste = "";
+    cart.map(product => {
+      teste += `*${product.amount}:* ${product.title}- ${product.priceFormatted}\n`;
+    });
+    teste += `*TOTAL = ${total}*`;
+    teste = window.encodeURIComponent(teste);
+    window.open(
+      `https://api.whatsapp.com/send?phone=5568999574021&text=${teste}`
+    );
+  }
 
   const dispatch = useDispatch();
 
@@ -49,8 +71,8 @@ export default function Cart() {
             <thead>
               <tr>
                 <th />
-                <th>PRODUCT</th>
-                <th>AMOUNT</th>
+                <th>PRODUTO</th>
+                <th>QUANTIDADE</th>
                 <th>SUBTOTAL</th>
               </tr>
             </thead>
@@ -81,7 +103,12 @@ export default function Cart() {
                     <strong>{product.subtotal}</strong>
                   </td>
                   <td>
-                    <button type="button" onClick={() => dispatch(CartActions.removeFromCart(product.id))}>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        dispatch(CartActions.removeFromCart(product.id))
+                      }
+                    >
                       <MdDelete size={20} color="#7159c1" />
                     </button>
                   </td>
@@ -91,7 +118,9 @@ export default function Cart() {
           </ProductTable>
 
           <footer>
-            <button type="submit">Proceed to Checkout</button>
+            <button onClick={cartWhats} type="submit">
+              ENVIAR PEDIDO
+            </button>
             <Total>
               <span>TOTAL:</span>
               <strong>{total}</strong>
