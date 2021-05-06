@@ -32,6 +32,18 @@ export default function Cart() {
     }))
   );
 
+  const cartWhats = () => {
+    let teste = "";
+    cart.map(product => {
+      teste += `*${product.amount}:* ${product.title}- ${product.priceFormatted}\n`;
+    });
+    teste += `*TOTAL = ${total}*`;
+    teste = window.encodeURIComponent(teste);
+    window.open(
+      `https://api.whatsapp.com/send?phone=5568999574021&text=${teste}`
+    );
+  };
+
   const dispatch = useDispatch();
 
   function increment(product) {
@@ -107,7 +119,9 @@ export default function Cart() {
           </ProductTable>
 
           <footer>
-            <button type="submit">ENVIAR PEDIDO</button>
+            <button onClick={cartWhats} type="submit">
+              ENVIAR PEDIDO
+            </button>
             <Total>
               <span>TOTAL:</span>
               <strong>{total}</strong>
