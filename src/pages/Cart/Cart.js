@@ -31,17 +31,6 @@ export default function Cart() {
       subtotal: formatPrice(product.price * product.amount)
     }))
   );
-  function cartWhats() {
-    let teste = "";
-    cart.map(product => {
-      teste += `*${product.amount}:* ${product.title}- ${product.priceFormatted}\n`;
-    });
-    teste += `*TOTAL = ${total}*`;
-    teste = window.encodeURIComponent(teste);
-    window.open(
-      `https://api.whatsapp.com/send?phone=5568999574021&text=${teste}`
-    );
-  }
 
   const dispatch = useDispatch();
 
@@ -118,9 +107,7 @@ export default function Cart() {
           </ProductTable>
 
           <footer>
-            <button onClick={cartWhats} type="submit">
-              ENVIAR PEDIDO
-            </button>
+            <button type="submit">ENVIAR PEDIDO</button>
             <Total>
               <span>TOTAL:</span>
               <strong>{total}</strong>
