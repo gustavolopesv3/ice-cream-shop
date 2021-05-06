@@ -35,7 +35,7 @@ export default function Cart() {
   const cartWhats = () => {
     let teste = "";
     cart.map(product => {
-      teste += `*${product.amount}:* ${product.title}- ${product.priceFormatted}\n`;
+      return (teste += `*${product.amount}:* ${product.title}- ${product.priceFormatted}\n`);
     });
     teste += `*TOTAL = ${total}*`;
     teste = window.encodeURIComponent(teste);
