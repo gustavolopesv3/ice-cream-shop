@@ -15,6 +15,7 @@ import {
   EmptyCart,
   StartShopping
 } from "./Cart_Styles";
+import storage from "redux-persist/lib/storage";
 
 export default function Cart() {
   const total = useSelector(state =>
@@ -42,6 +43,7 @@ export default function Cart() {
     window.open(
       `https://api.whatsapp.com/send?phone=5568999574021&text=${teste}`
     );
+    storage.removeItem("persist:cart");
   };
 
   const dispatch = useDispatch();
