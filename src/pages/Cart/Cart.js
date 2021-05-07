@@ -64,8 +64,8 @@ export default function Cart() {
 
           <div>
             <h2>Oops...</h2>
-            <p>Looks like your shopping cart is empty!</p>
-            <StartShopping to="/">Start Shopping</StartShopping>
+            <p>Parece que seu carrinho estar vazio</p>
+            <StartShopping to="/">Inicei sua compra</StartShopping>
           </div>
         </EmptyCart>
       ) : (

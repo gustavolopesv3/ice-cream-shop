@@ -1,16 +1,18 @@
-import { call, select, put, all, takeLatest } from 'redux-saga/effects';
-import { toast } from 'react-toastify';
+import { call, select, put, all, takeLatest } from "redux-saga/effects";
+import { toast } from "react-toastify";
 
-import api from '../../../services/api';
+import api from "../../../services/api";
 // import history from '../../../services/history';
-import { addToCartSuccess, updateAmountSuccess } from './actions';
-import { setProductStatus } from '../products/actions';
-import { formatPrice } from '../../../utils/format';
+import { addToCartSuccess, updateAmountSuccess } from "./actions";
+import { setProductStatus } from "../products/actions";
+import { formatPrice } from "../../../utils/format";
 
 function* addToCart({ id }) {
   yield put(setProductStatus(id, true));
 
-  const productExists = yield select(state => state.cart.find(p => p.id === id));
+  const productExists = yield select(state =>
+    state.cart.find(p => p.id === id)
+  );
 
   const stock = yield call(api.get, `stock/${id}`);
 
@@ -21,7 +23,7 @@ function* addToCart({ id }) {
 
   try {
     if (amount > stockAmount) {
-      toast.error('Requested Amount is Out of Stock');
+      toast.error("Estoque indisponivel no momento");
       return;
     }
 
@@ -30,7 +32,11 @@ function* addToCart({ id }) {
     } else {
       const response = yield call(api.get, `products/${id}`);
 
-      const data = { ...response.data, amount: 1, priceFormatted: formatPrice(response.data.price) };
+      const data = {
+        ...response.data,
+        amount: 1,
+        priceFormatted: formatPrice(response.data.price)
+      };
 
       yield put(addToCartSuccess(data));
       // history.push('/cart');
@@ -47,7 +53,7 @@ function* updateAmount({ id, amount }) {
   const stockAmount = stock.data.amount;
 
   if (amount > stockAmount) {
-    toast.error('Product amount not available in stock');
+    toast.error("Product amount not available in stock");
     return;
   }
 
@@ -55,6 +61,6 @@ function* updateAmount({ id, amount }) {
 }
 
 export default all([
-  takeLatest('@cart/ADD_REQUEST', addToCart),
-  takeLatest('@cart/UPDATE_AMOUNT_REQUEST', updateAmount),
+  takeLatest("@cart/ADD_REQUEST", addToCart),
+  takeLatest("@cart/UPDATE_AMOUNT_REQUEST", updateAmount)
 ]);
